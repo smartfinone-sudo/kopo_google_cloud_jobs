@@ -1,0 +1,20 @@
+# Cloud Build to build & push a container for Cloud Run Jobs
+# Replace REGION and REPO/IMAGE via substitutions or edit directly.
+substitutions:
+  # Set these before running: gcloud builds submit --substitutions=_REGION=asia-northeast1,_REPO=jobs-lab,_IMAGE=prime-lab
+  _REGION: asia-northeast1
+  _REPO: jobs-lab
+  _IMAGE: prime-lab
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - build
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_IMAGE}:latest'
+      - '.'
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - push
+      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_IMAGE}:latest'
+images:
+  - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_IMAGE}:latest'

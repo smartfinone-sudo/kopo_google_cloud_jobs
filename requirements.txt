@@ -1,0 +1,2 @@
+# No external packages required for this lab.
+# (You can add requests, google-cloud-storage, etc., if you extend the exercise.)
